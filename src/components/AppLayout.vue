@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
     <div class="root">
-        <div :style="`background-image: url(${imgUrl})`" class="img"></div>
+        <div :style="`background-image: url(..${imgUrl})`" class="img"></div>
         <div class="main">
             <el-button class="btn">Сгенерировать коктейл :)</el-button>
 
