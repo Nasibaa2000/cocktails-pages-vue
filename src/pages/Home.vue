@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import AppLayout from '../components/AppLayout.vue'
 import CocktailThumb from '../components/CocktailThumb.vue'
 import { useRootStore } from '@/stores/root'
@@ -8,12 +7,10 @@ import { storeToRefs } from 'pinia';
 const rootStore = useRootStore()
 rootStore.getIngredients()
 
-const { ingredients, cocktails } = storeToRefs(rootStore)
-const ingredient = ref(null) 
-
-
+const { ingredients, ingredient, cocktails } = storeToRefs(rootStore)
+ 
 function getCocktails() {
-    rootStore.getCocktails(ingredient.value)
+    rootStore.getCocktails(rootStore.ingredient)
 }
 </script>
 
@@ -26,9 +23,11 @@ function getCocktails() {
 
                 <div class="select-wrapper">
                     <el-select 
-                        v-model="ingredient" 
+                        v-model="rootStore.ingredient" 
                         placeholder="Выбери основной ингредиент" 
                         size="large"
+                        filterable 
+                        allow-create
                         class="select"
                         @change="getCocktails"
                         >
@@ -64,14 +63,7 @@ function getCocktails() {
 
 @import '../assets/styles/main'
 
-.wrapper
-    display: flex
-    justify-content: center
-    align-items: center
 
-.info
-    padding: 80px 0
-    text-align: center
 
 .select-wrapper
     padding-top: 50px
@@ -91,7 +83,6 @@ function getCocktails() {
 
 .cocktails
     display: flex
-    justify-content: space-between
     align-items: center
     flex-wrap: wrap
     max-height: 400px
